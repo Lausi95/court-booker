@@ -16,7 +16,6 @@ class SlotTest {
       .isEqualTo("Invalid Slot value: $someNegativeValue. Slot value must be between 0 and 47")
   }
 
-  // test cannot create slot with too high value
   @Test
   fun cannotCreateSlotWithTooHighValue() {
     val someTooHighValue: Int = someInt() + 48
@@ -25,5 +24,14 @@ class SlotTest {
 
     assertThat(maybeSlot.error)
       .isEqualTo("Invalid Slot value: $someTooHighValue. Slot value must be between 0 and 47")
+  }
+
+  @Test
+  fun canCreateBookingWithValueWithinRange() {
+    val someValueWithinRange: Int = someInt() % 48
+
+    val maybeSlot = Slot.create(someValueWithinRange)
+
+    assertThat(maybeSlot.result?.value).isEqualTo(someValueWithinRange)
   }
 }
